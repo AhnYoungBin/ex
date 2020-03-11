@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import os, glob
+from PIL import Image
 from torch.utils.data import Dataset,DataLoader
-
 def FilePath(PATH):
     Folder = os.listdir(PATH)
 
