@@ -14,7 +14,7 @@ class _BasicBlock(nn.Module):
         self.bn2 = nn.BatchNorm2d(planes)
 
         self.se = SELayer(planes)
-        self.relu = nn.Relu(inplace =True)
+        self.relu = nn.ReLU(inplace =True)
         self.shorcut = nn.Sequential()
         if stride != 1 or inplanes != self.expansion * planes:
             self.shortcut = nn.Sequential(
@@ -118,16 +118,16 @@ class ResNet(nn.Module):
         out = self.linear(out)
         return out
 def ResNet18(seon=False):
-    return ResNet(BasicBlock, [2,2,2,2],seon=seon)
+    return ResNet(_BasicBlock, [2,2,2,2],seon=seon)
 
 def ResNet34(seon=False):
-    return ResNet(BasicBlock, [3,4,6,3],seon=seon)
+    return ResNet(_BasicBlock, [3,4,6,3],seon=seon)
 
 def ResNet50(seon=False):
-    return ResNet(Bottleneck, [3,4,6,3],seon=seon)
+    return ResNet(_Bottleneck, [3,4,6,3],seon=seon)
 
 def ResNet101(seon=False):
-    return ResNet(Bottleneck, [3,4,23,3],seon=seon)
+    return ResNet(_Bottleneck, [3,4,23,3],seon=seon)
 
 def ResNet152(seon=False):
-    return ResNet(Bottleneck, [3,8,36,3],seon=seon)
+    return ResNet(_Bottleneck, [3,8,36,3],seon=seon)
