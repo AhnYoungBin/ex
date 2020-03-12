@@ -6,9 +6,17 @@ import torch.nn as nn
 import torch.optim as optim
 import data
 import argparse
+import modellist
 
 PATH = '/content/gdrive/My Drive/dataset'
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+modellist = modellist.Modellist()
+
+parser = argparse.ArgumentParser(description='Learn by Modeling Dog Cat DataSet')
+parser.add_argument('modelnum',type=int, help='Select your model number')
+parser.add_argument('lr',type=int, help='Select opimizer learning rate')
+args = parser.parse_args()
 
 li = data.FilePath(PATH)
 
