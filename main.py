@@ -1,4 +1,3 @@
-from model import resnet
 import torch
 from torchvision import transforms
 from torch.utils.data import DataLoader
@@ -15,9 +14,15 @@ modellist = modellist.Modellist()
 
 parser = argparse.ArgumentParser(description='Learn by Modeling Dog Cat DataSet')
 parser.add_argument('modelnum',type=int, help='Select your model number')
-parser.add_argument('lr',type=int, help='Select opimizer learning rate')
-args = parser.parse_args()
+parser.add_argument("-se", help="Put the selayer in the model.",
+                    action="store_true")
+parser.add_argument("-show", help="show to model Archtecture",
+                    action="store_true")
 
+parser.add_argument('lr',type=float, help='Select opimizer learning rate')
+parser.add_argument('epochs',type=int, help='Select train epochs')
+
+args = parser.parse_args()
 li = data.FilePath(PATH)
 
 train_transform = transforms.Compose([transforms.Resize((224,224)),
@@ -37,10 +42,12 @@ train_data_loader = DataLoader(Train, batch_size = 16, shuffle=True, num_workers
 val_data_loader = DataLoader(Val, batch_size = 16, shuffle=False, num_workers=2)
 test_data_loader = DataLoader(Test, batch_size = 16, shuffle=False, num_workers=2)
 
-model = resnet.ResNet(resnet._Bottleneck,[3,4,6,3],seon=False)
+model = modellist(args.modelnum, seon = args.se)
+if args.show:
+    print(model)
 model.to(device)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4)
+optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=0.9, weight_decay=5e-4)
 
 best_acc = 0
 
@@ -90,9 +97,8 @@ def val():
     epoch_acc = correct / total
     print('>> test | Loss : {.4f}  Acc : {.4f}'.format(epoch_loss,epoch_acc))
 
-epochs = 3
-for epoch in range(1,epochs+1):
-    print('Epoch {}/{}'.format(epoch, epochs))
+for epoch in range(1,args.epochs+1):
+    print('Epoch {}/{}'.format(epoch, args.epochs))
     print('-'*20)
     train()
     val()
