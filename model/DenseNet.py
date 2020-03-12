@@ -119,13 +119,13 @@ class DenseNet(nn.Module):
 
 
 def DenseNet121(seon):
-    return DenseNet(Bottleneck, [6,12,24,16], growth_rate=32,seon=seon)
+    return DenseNet([6,12,24,16], growth_rate=32,seon=seon)
 
 def DenseNet169(seon):
-    return DenseNet(Bottleneck, [6,12,32,32], growth_rate=32,seon=seon)
+    return DenseNet([6,12,32,32], growth_rate=32,seon=seon)
 
 def DenseNet201(seon):
-    return DenseNet(Bottleneck, [6,12,48,32], growth_rate=32,seon=seon)
+    return DenseNet([6,12,48,32], growth_rate=32,seon=seon)
 
 def DenseNet161(seon):
-    return DenseNet(Bottleneck, [6,12,36,24], growth_rate=48,seon=seon)
+    return DenseNet([6,12,36,24], growth_rate=48,seon=seon)
