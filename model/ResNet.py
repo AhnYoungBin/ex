@@ -117,17 +117,17 @@ class ResNet(nn.Module):
         out = out.view(out.size(0), -1)
         out = self.linear(out)
         return out
-def ResNet18():
-    return ResNet(BasicBlock, [2,2,2,2],seon=False)
+def ResNet18(seon=False):
+    return ResNet(BasicBlock, [2,2,2,2],seon=seon)
 
-def ResNet34():
-    return ResNet(BasicBlock, [3,4,6,3],seon=False)
+def ResNet34(seon=False):
+    return ResNet(BasicBlock, [3,4,6,3],seon=seon)
 
-def ResNet50():
-    return ResNet(Bottleneck, [3,4,6,3],seon=False)
+def ResNet50(seon=False):
+    return ResNet(Bottleneck, [3,4,6,3],seon=seon)
 
-def ResNet101():
-    return ResNet(Bottleneck, [3,4,23,3],seon=False)
+def ResNet101(seon=False):
+    return ResNet(Bottleneck, [3,4,23,3],seon=seon)
 
-def ResNet152():
-    return ResNet(Bottleneck, [3,8,36,3],seon=False)
+def ResNet152(seon=False):
+    return ResNet(Bottleneck, [3,8,36,3],seon=seon)
