@@ -1,8 +1,8 @@
-from model import VGG, Resnet, DenseNet
+from model import Vgg, ResNet, DenseNet
 
 class Modellist():
     def __init__(self):
-        print('model number list')
+        print('modelnum list')
         print('-'*30)
         print('1: Vgg11')
         print('2: Vgg13')
@@ -20,16 +20,16 @@ class Modellist():
         print('-'*30)
 
     def __call__(self,x,seon):
-        return {1: Vgg.Vgg11(seon),
-        2: Vgg.Vgg13(seon),
-        3: Vgg.Vgg16(seon),
-        4: Vgg.Vgg19(seon),
-        5: Resnet.Resnet18(seon),
-        6: Resnet.Resnet34(seon),
-        7: Resnet.Resnet50(seon),
-        8: Resnet.Resnet101(seon),
-        9: Resnet.Resnet152(seon),
-        10: DenseNet121(seon),
-        11: DenseNet169(seon),
-        12: DenseNet201(seon),
-        13: DenseNet161(seon)}[x]
+        return {1: Vgg.VGG11(seon),
+        2: Vgg.VGG13(seon),
+        3: Vgg.VGG16(seon),
+        4: Vgg.VGG19(seon),
+        5: ResNet.ResNet18(seon),
+        6: ResNet.ResNet34(seon),
+        7: ResNet.ResNet50(seon),
+        8: ResNet.ResNet101(seon),
+        9: ResNet.ResNet152(seon),
+        10: DenseNet.DenseNet121(seon),
+        11: DenseNet.DenseNet169(seon),
+        12: DenseNet.DenseNet201(seon),
+        13: DenseNet.DenseNet161(seon)}[x]
