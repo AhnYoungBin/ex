@@ -6,6 +6,7 @@ import torch.optim as optim
 import data
 import argparse
 import modellist
+import matplotlib.pyplot as plt
 
 PATH = '/content/gdrive/My Drive/dataset'
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
