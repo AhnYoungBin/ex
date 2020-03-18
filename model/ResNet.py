@@ -24,7 +24,7 @@ class _BasicBlock(nn.Module):
         
     def forward(self,x):
         out = self.relu(self.bn1(self.conv1(x)))
-        out = self.relu(self.bn2(self.cvon2(out)))
+        out = self.relu(self.bn2(self.conv2(out)))
         if self.seon:
             out = self.se(out)
         return out
