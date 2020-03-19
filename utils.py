@@ -1,6 +1,8 @@
 import os
 import matplotlib.pyplot as plt
 import torch
+from sklearn.metrics import confusion_matrix
+from mlxtend.plotting import plot_confusion_matrix
 
 class Tester():
     def __init__(self,model,criterion,optimizer,test_loader):
@@ -11,12 +13,15 @@ class Tester():
         self.criterion = criterion
         self.optimizer = optimizer
         self.test_loader = test_loader
+        self.predlist=torch.zeros(0,dtype=torch.long, device='cpu')
+        self.lbllist=torch.zeros(0,dtype=torch.long, device='cpu')
 
     def test(self):
         self.model.eval()
         test_loss = 0
         total = 0
         correct = 0 
+
         for idx, (inputs, labels) in enumerate(self.test_loader):
             inputs = inputs.to(self.device, dtype=torch.float)
             labels = labels.to(self.device, dtype=torch.long)
@@ -29,7 +34,10 @@ class Tester():
                 total += labels.size(0)
                 correct += predicted.eq(labels).sum().item()
 
-        epoch_loss = test_loss /len(test_data_loader)
+                predlist=torch.cat([predlist,preds.view(-1).cpu()])
+                lbllist=torch.cat([lbllist,labels.view(-1).cpu()])
+
+        epoch_loss = test_loss /len(self.test_loader)
         epoch_acc = correct / total
 
         print('-'*30)
@@ -37,10 +45,12 @@ class Tester():
         print('-'*30)
 
     def confusion_matrix(self):
-        pass
-
-
-
+        class_name = ['cat', 'dog']         
+        conf_mat=confusion_matrix(self.lbllist.numpy(), self.predlist.numpy())
+        fig, ax = plot_confusion_matrix(conf_mat=cm,figsize=(8,8))
+        ax.set_xticklabels([''] + class_name)
+        ax.set_yticklabels([''] + class_name)
+        fig.savefig('/content/ex/workspace/confusion_matrix.png', dpi=100)
 
 
 
@@ -65,7 +75,7 @@ def train_graph(epoch,history_dict):
     plt.plot(epochs_range, history_dict['val']['loss'], label='Validation Loss')
     plt.legend(loc='upper right')
     plt.title('Training and Validation Loss')
-    plt.savefig('/content/ex/workspace/train_val_graph.png', dpi=150)
+    plt.savefig('/content/ex/workspace/train_val_graph.png', dpi=100)
     print('')
     print('The train graph is saved...')
     print('')
