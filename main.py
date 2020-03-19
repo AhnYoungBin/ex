@@ -91,6 +91,8 @@ def train():
 
 def val():
     global best_acc
+    print(best_acc)
+    
     model.eval()
     val_loss = 0
     total = 0
@@ -117,9 +119,10 @@ def val():
     #save model
     if epoch_acc > best_acc:
         best_acc = epoch_acc
-        if best_acc > 70:
-            savePath = "/content/ex/model/trainmodel.pth"
+        if best_acc > 0.7:
+            savePath = "/content/gdrive/My Drive/model/resnet_test_pytorch.pth"
             torch.save(model.state_dict(), savePath)
+
 
 #training model
 for epoch in range(1,args.epochs+1):
@@ -134,3 +137,4 @@ utils.train_graph(args.epochs,history_dict)
 #testing
 tester = utils.Tester(model,criterion,optimizer,test_data_loader)
 tester.test()
+tester.confusion_matrix()
