@@ -7,6 +7,9 @@ import data
 import argparse
 import modellist
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+from mlxtend.plotting import plot_confusion_matrix
+import os
 
 PATH = '/content/gdrive/My Drive/dataset'
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -115,6 +118,11 @@ for epoch in range(1,args.epochs+1):
     train()
     val()
 
+try:
+    if not os.path.exists('/content/ex/workspace'):
+        os.makedirs('/content/ex/workspace')
+except OSError:
+    print('Error Creating director')
 
 epochs_range = range(args.epochs)
 plt.figure(figsize=(8, 8))
@@ -129,8 +137,7 @@ plt.plot(epochs_range, train_loss_list, label='Training Loss')
 plt.plot(epochs_range, val_loss_list, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
-plt.show()
-
+plt.savefig('/content/ex/workspace/train_val_graph.png', dpi=300)
 
 test_loss_list = []
 test_acc_list = []
@@ -159,10 +166,15 @@ def test():
     epoch_loss = test_loss /len(test_data_loader)
     epoch_acc = correct / total
 
+    cm = confusion_matrix(predicted_list,predicted_list)
+    fig, ax = plot_confusion_matrix(conf_mat=cm,figsize=(8,8))
+    ax.set_xticklabels([''] + class_name)
+    ax.set_yticklabels([''] + class_name)
+    plt.xlabel
+    plt.savefig('/content/ex/workspace/test_confusion_matrix', dpi =300)
     test_loss_list.append(epoch_loss)
     test_acc_list.append(epoch_acc)
     print('-'*30)
     print('>> test | Loss : {:.4f}  Acc : {:.4f}'.format(epoch_loss,epoch_acc))
 
 test()
-
