@@ -34,8 +34,8 @@ class Tester():
                 total += labels.size(0)
                 correct += predicted.eq(labels).sum().item()
 
-                predlist=torch.cat([predlist,preds.view(-1).cpu()])
-                lbllist=torch.cat([lbllist,labels.view(-1).cpu()])
+                self.predlist=torch.cat([self.predlist,predicted.view(-1).cpu()])
+                self.lbllist=torch.cat([self.lbllist,labels.view(-1).cpu()])
 
         epoch_loss = test_loss /len(self.test_loader)
         epoch_acc = correct / total
@@ -51,6 +51,9 @@ class Tester():
         ax.set_xticklabels([''] + class_name)
         ax.set_yticklabels([''] + class_name)
         fig.savefig('/content/ex/workspace/confusion_matrix.png', dpi=100)
+        print('')
+        print('The confusion matrix is saved...')
+        print('')
 
 
 
@@ -79,3 +82,5 @@ def train_graph(epoch,history_dict):
     print('')
     print('The train graph is saved...')
     print('')
+
+        
