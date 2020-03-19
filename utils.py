@@ -47,7 +47,7 @@ class Tester():
     def confusion_matrix(self):
         class_name = ['cat', 'dog']         
         conf_mat=confusion_matrix(self.lbllist.numpy(), self.predlist.numpy())
-        fig, ax = plot_confusion_matrix(conf_mat=cm,figsize=(8,8))
+        fig, ax = plot_confusion_matrix(conf_mat=conf_mat,figsize=(8,8))
         ax.set_xticklabels([''] + class_name)
         ax.set_yticklabels([''] + class_name)
         fig.savefig('/content/ex/workspace/confusion_matrix.png', dpi=100)
