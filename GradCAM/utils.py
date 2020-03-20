@@ -9,7 +9,46 @@ from PIL import Image
 
 def find_resnet_layer(arch, target_layer_name):
     '''
-        arget_layer_name = 'conv1'
+        target_layer_name = 'conv1'
+        target_layer_name = 'block1'
+        target_layer_name = 'block2'
+        target_layer_name = 'block3'
+        target_layer_name = 'block4'
+        target_layer_name = 'avgpool'
+        target_layer_name = 'linear'
+    '''
+    if 'block' in target_layer_name:
+        layer_num = int(target_layer_name.lstrip('block'))
+        if layer_num == 1:
+            target_layer = arch.block1
+        elif layer_num == 2:
+            target_layer = arch.block2
+        elif layer_num == 3:
+            target_layer = arch.block3
+        elif layer_num == 4:
+            target_layer = arch.block4
+    else:
+        target_layer = arch._modules[target_layer_name]
+
+    return target_layer
+
+def find_vgg_layer(arch, target_layer_name):
+    '''
+        target_layer_name = 'features'
+        target_layer_name = 'classifier'
+    '''
+    if 'features' == target_layer_name:
+        target_layer = arch.features
+    elif 'classifier' == target_layer_name:
+        target_layer = arch.classifier
+    else:
+        target_layer = arch._modules[target_layer_name]
+
+    return target_layer
+
+def find_densenet_layer(arch, target_layer_name):
+    '''
+        target_layer_name = 'conv1'
         target_layer_name = 'block1'
         target_layer_name = 'block2'
         target_layer_name = 'block3'
